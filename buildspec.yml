@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+  pre_build:
+    commands:
+      # Install AWS CLI
+      - apt-get update && apt-get install -y awscli
+  build:
+    commands:
+      # Copy index.html from S3 bucket to build environment
+      - aws s3 cp s3://stage-demo-eks/index.html index.html
+  post_build:
+    commands:
+      # Print a message indicating successful completion
+      - echo "Deployment successful."
